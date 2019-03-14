@@ -6,7 +6,7 @@ __Printemps 2019__
 Equipes (en italique les responsables) :
 
 
-* **REC**: Récupération et enregistrement caméra
+* **[REC](REC)**: Récupération et enregistrement caméra
   * Membres : _WK_ et YL
   * Objectifs
     * Le système sera capable de récupérer le flux vidéo d’une caméra (diurne et nocturne)
