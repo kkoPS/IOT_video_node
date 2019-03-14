@@ -7,7 +7,7 @@ Equipes :
 
 
 
-* **REC **: Récupération et enregistrement caméra
+* **REC**: Récupération et enregistrement caméra
   * Membres : YL et WK
   * Objectifs
     * Le système sera capable de récupérer le flux vidéo d’une caméra (diurne et nocturne)
