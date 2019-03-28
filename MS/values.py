@@ -9,12 +9,11 @@ configfile = 'config.json'
 class Configuration():
 
     def __init__(self):
-      print("init")
       self._values = {}
 
-    def load(self):
-      print("load")
-      
+    def load(self):  
+      ## if not exist create ou null
+      #  
       with open(configfile) as json_data_file:
         data = json.load(json_data_file)
         self._values = data
@@ -31,6 +30,7 @@ class Configuration():
       except KeyError as error:
         print ("Key not fount : %s" % error)
         value = None
+        
       return value
     
     def set(self, key, value):
