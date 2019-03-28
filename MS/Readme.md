@@ -3,13 +3,49 @@ Cette partie du projet expose une api rest qui permet d'intéragire avec le pér
 
 ## API
 ### /
+
 #### GET
+
 return
 
-### /config
-#### GET
+
+
+### /param
+
+#### GET 
+
+​	-> querystring key
 
 #### POST
+
+​	-> querystring key  et  valeur
+
+
+
+-> paramêtre:
+t_before INT
+t_after INT
+-> à voir à quel point les types sont différents au moment de l'écriture dans le fichier
+
+
+
+### /stream
+
+​	-> query string : start / stop
+
+-> adresse à laquel on peut récupérer le flux ( en stream )
+
+-> une clé générée pour le chiffrement symétric du flux. -> 
+
+
+
+### /record
+
+-> param de temps avant
+
+-> param de temps après
+
+
 
 
 ## Configuration File
