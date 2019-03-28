@@ -1,23 +1,38 @@
+#!/usr/bin/python3
+
 import json
 
 configfile = 'config.json'
 
-class Configuration:
+# TODO : use logging
+
+class Configuration():
 
     def __init__(self):
-        pass
+      print("init")
+      self._values = {}
 
     def load(self):
-        with open(configfile) as json_data_file:
-            data = json.load(json_data_file)
-
-        self.val1 = data['val1']
-        self.val2 = data['val2']
-
+      print("load")
+      
+      with open(configfile) as json_data_file:
+        data = json.load(json_data_file)
+        self._values = data
+      
     def store(self):
-        data = json
-        data['val1'] = self.val1
-        data['val2'] = self.val2
+        data = self._values
 
-        with open(configfile, 'w') as outfile:
-            json.dump(data, outfile)
+        with open(configfile, 'w') as json_data_file:
+            json.dump(data, json_data_file)
+
+    def get(self, key):
+      try:
+        value = self._values[key]
+      except KeyError as error:
+        print ("Key not fount : %s" % error)
+        value = None
+      return value
+    
+    def set(self, key, value):
+      self._values[key] = value
+      
