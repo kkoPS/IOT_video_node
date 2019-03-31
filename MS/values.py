@@ -1,8 +1,10 @@
 #!/usr/bin/python3
-
+import os.path
+from shutil import copyfile
 import json
 
-configfile = 'config.json'
+configfile = 'config_file.json'
+configDefault = 'config_default.json'
 
 # TODO : use logging
 
@@ -12,12 +14,18 @@ class Configuration():
       self._values = {}
 
     def load(self):  
-      ## if not exist create ou null
-      #  
+      #create config file if don't exist
+      if not os.path.exists(configfile):
+        print("file doesn't exist")
+        open(configfile, 'a').close()
+      
+        #copy default config file
+        copyfile(configDefault, configfile)    
+
       with open(configfile) as json_data_file:
         data = json.load(json_data_file)
         self._values = data
-      
+              
     def store(self):
         data = self._values
 
@@ -26,13 +34,22 @@ class Configuration():
 
     def get(self, key):
       try:
-        value = self._values[key]
+        with open(configfile) as json_data_file:
+          data = json.load(json_data_file)
+          self._values = data
+          
+          value = self._values[key]
+
       except KeyError as error:
         print ("Key not fount : %s" % error)
-        value = None
-        
+
       return value
     
     def set(self, key, value):
       self._values[key] = value
-      
+
+config = Configuration()
+config.load()
+config.get('record')
+
+
