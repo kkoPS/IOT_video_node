@@ -1,12 +1,10 @@
 { 
-    "record" : [
+    "record" : [ 
         {
-            "tb":"t_before",
-            "time":10
+            "t_before":10
         },
         {
-            "ta":"t_after",
-            "time":10
+            "t_after":15
         }
     ]
 }

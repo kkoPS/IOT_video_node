@@ -36,7 +36,7 @@ class param(Resource):
   def post(self):
     config = Configuration()
     config.load()
-    config.set(key=request.args['key'], value=request.form['value'])
+    config.set(route='param', key=request.args['key'], value=request.form['value'])
     config.store()
     return None, 201
 
@@ -52,33 +52,40 @@ class Record(Resource):
 
         key_before = request.args.get('t_before')
         key_after = request.args.get('t_after')
+        list_value = config.get('record')
+
         #get the attribute of t_before
         if key_before != None:
-            value = config.get('record')
-            return value[0]
+          for dict_value in list_value:
+            if 't_before' in dict_value.keys():
+              return dict_value['t_before'], 200
         #get the attribute of t_after
-        elif key_after != None:
-            value = config.get('record')
-            return value[1]
+        if key_after != None:
+          for dict_value in list_value:
+            if 't_after' in dict_value.keys():
+              return dict_value['t_after']
         #get all attributes of record
-        else:
-            value = config.get('record')
-
-        return value
+        if key_before == None and key_after == None:
+          return config.get('record')
     
+    @api.response(201, 'Key created successfuly')
     def post(self):
         config = Configuration()
         config.load() 
 
-        value_t_before = request.args.get('t_before')
-        value_t_after = request.args.get('t_after')
+        key_before = request.args.get('t_before')
+        key_after = request.args.get('t_after')
 
-        '''if value_t_before != None:
-            #config.set('record', 't_before', value_t_before)
-            
+        if key_before != None:
+          config.set(route='record', key='t_before', value=key_before)
+          config.store() 
         #get the attribute of t_after
-        elif value_t_after != None:
-            #config.set('record', 't_after', value_t_after)'''
+        if key_after != None:
+          print("oke")
+          config.set(route='record', key='t_after', value=key_after)
+          config.store()
+
+        return None, 201
             
 api.add_resource(Record, '/record', methods=['GET', 'POST']) # Route_Record
 api.add_resource(base, '/')
