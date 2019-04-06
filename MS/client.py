@@ -22,28 +22,38 @@ class base(Resource):
     )
     return response
 
-class param(Resource):
+class paramRecod(Resource):
   """interracting with configuration file"""
 
   @api.response(200, 'Successing')
   def get(self):
     config = Configuration()
     config.load()
-    value = config.get(request.args['key'])
-    return value, 200  
+
+    record_values = config.get("Record")
+    return record_values, 200  
   
   @api.response(201, 'Key created successfuly')
   def post(self):
     config = Configuration()
     config.load()
+
+    t_before = request.forms['t_before']
+    t_after = request.forms['t_after']
+    
+    if t_before != None:
+      config.set(route='record', key='t_before', value=key_before)
+    if t_after != None:
+      config.set(route='record', key='t_after', value=key_after)
+    config.store()
+    
+    if
     config.set(route='param', key=request.args['key'], value=request.form['value'])
     config.store()
     return None, 201
 
 @ns.route('/record', methods=['GET', 'POST'])
 @ns.response(200, 'successing')
-@ns.param('t_before', 'time identifier')
-@ns.param('t_after', 'time identifier')
 class Record(Resource):  
        
     def get(self):
@@ -67,29 +77,19 @@ class Record(Resource):
         #get all attributes of record
         if key_before == None and key_after == None:
           return config.get('record')
-    
+
+        # appel du script qui lance l'enregistrement
+
+
+
+
     @api.response(201, 'Key created successfuly')
-    def post(self):
-        config = Configuration()
-        config.load() 
-
-        key_before = request.args.get('t_before')
-        key_after = request.args.get('t_after')
-
-        if key_before != None:
-          config.set(route='record', key='t_before', value=key_before)
-          config.store() 
-        #get the attribute of t_after
-        if key_after != None:
-          print("oke")
-          config.set(route='record', key='t_after', value=key_after)
-          config.store()
-
-        return None, 201
             
-api.add_resource(Record, '/record', methods=['GET', 'POST']) # Route_Record
 api.add_resource(base, '/')
-api.add_resource(param, '/param')
+api.add_resource(Record, '/record', methods=['GET']) # Route_Record
+api.add_resource(Stream, '/stream')
+api.add_resource(paramRecord, '/param/record')
+api.add_resource(parmBackend, '/param/backend')
 
 if __name__ == "__main__":
     app.run(port='2000')

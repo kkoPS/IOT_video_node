@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+ # -*- coding: utf-8 -*-
+
 import os.path
 from shutil import copyfile
 import json
@@ -32,13 +34,10 @@ class Configuration():
       with open(configfile, 'w') as json_data_file:
         json.dump(data, json_data_file)
         
-    def get(self, key):
-      try:
-        with open(configfile) as json_data_file:
-          data = json.load(json_data_file)
-          self._values = data
-          
-          value = self._values[key]
+    def get(self, route, key):
+      data = self._values
+      try:          
+        value = data[route][key]
 
       except KeyError as error:
         print ("Key not fount : %s" % error)
@@ -46,23 +45,27 @@ class Configuration():
       return value
     
     def set(self, route, key, value):
-      i = 0
-      #parcourt le dico à la recherche de la route
-      if route in self._values.keys():
-        #pour chaque route on a une liste de dictionnaire
-        for key_dic in self._values[route]:
-          #regarde si la clé de l'url est contenue dans la liste
-          if key in key_dic.keys():
-            print(key)
-            #changement de la valeur
-            self._values[route][i][key] = float(value)
-          i += 1
+      data = self._values
+      data[route][key] = value
+      self._value = data
+      #
+      #i = 0
+      ##parcourt le dico à la recherche de la route
+      #if route in self._values.keys():
+      #  #pour chaque route on a une liste de dictionnaire
+      #  for key_dic in self._values[route]:
+      #    #regarde si la clé de l'url est contenue dans la liste
+      #    if key in key_dic.keys():
+      #      print(key)
+      #      #changement de la valeur
+      #      self._values[route][i][key] = float(value)
+      #    i += 1
  
 #======================================================
 # TESTS
 #======================================================
 config = Configuration()
 config.load()
-config.get('record')
+print config.get('record', 't_before')
 
 
