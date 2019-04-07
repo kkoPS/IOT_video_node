@@ -5,6 +5,9 @@ import os.path
 from shutil import copyfile
 import json
 
+TEST = False
+
+
 configfile = 'config_file.json'
 configDefault = 'config_default.json'
 
@@ -48,24 +51,13 @@ class Configuration():
       data = self._values
       data[route][key] = value
       self._value = data
-      #
-      #i = 0
-      ##parcourt le dico à la recherche de la route
-      #if route in self._values.keys():
-      #  #pour chaque route on a une liste de dictionnaire
-      #  for key_dic in self._values[route]:
-      #    #regarde si la clé de l'url est contenue dans la liste
-      #    if key in key_dic.keys():
-      #      print(key)
-      #      #changement de la valeur
-      #      self._values[route][i][key] = float(value)
-      #    i += 1
  
 #======================================================
 # TESTS
 #======================================================
-config = Configuration()
-config.load()
-print config.get('record', 't_before')
+#if TEST :
+#  config = Configuration()
+#  config.load()
+#  print config.get('record', 't_before')
 
 
